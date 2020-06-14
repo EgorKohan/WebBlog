@@ -4,7 +4,7 @@
     <form action="/user" method="post">
         <input type="text" value="${user.username}" name="username">
         <input type="hidden" value="${user.id}" name="userId">
-        <input type="hidden" value="${_csrf.token}" name="_csrf">
+        <input type="hidden" name="_csrf" value="${_csrf.token}" />
         <button type="submit">Save</button>
     </form>
 </@c.page>

@@ -1,13 +1,13 @@
 package org.example.controller;
 
 import org.example.domain.Article;
+import org.example.domain.User;
 import org.example.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.text.NumberFormat;
 
 @Controller
 @RequestMapping("/articles")
@@ -32,11 +32,12 @@ public class ArticleController {
 
     @PostMapping
     public String addArticle(
+            @AuthenticationPrincipal User user,
             @RequestParam String title,
             @RequestParam String text,
             @RequestParam String tag,
             Model model) {
-        Article article = new Article(title, text, tag);
+        Article article = new Article(title, text, tag, user);
         articleService.addArticle(article);
         model.addAttribute("articles", articleService.getAll());
         return "/articles";

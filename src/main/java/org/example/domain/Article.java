@@ -21,18 +21,28 @@ public class Article {
 
     private Date updateAt;
 
-//    @JoinColumn(name = "tag")
+    //    @JoinColumn(name = "tag")
     private String tag;
 
-    public Article(){}
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
 
-    public Article(String title, String text, String tag) {
+    public Article() {
+    }
+
+    public Article(String title, String text, String tag, User author) {
         this.title = title;
         this.text = text;
         this.tag = tag;
         this.setUpdateAt(new Date());
         this.setCreatedAt(new Date());
         this.setStatus(Status.PUBLIC);
+        this.author = author;
+    }
+
+    public String getAuthorIfExists() {
+        return (author == null) ? "<none>" : author.getUsername();
     }
 
     public Long getId() {
@@ -89,5 +99,13 @@ public class Article {
 
     public void setTag(String tagName) {
         this.tag = tagName;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }
